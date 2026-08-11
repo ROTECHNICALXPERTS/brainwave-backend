@@ -1,0 +1,5 @@
+# mcp_server has no dependency on the rest of this repo (see server.py/__main__.py) - it
+# only calls the orchestrator over HTTP. Kept separate from the root requirements.txt so
+# its image never pulls in x402/web3/eth-account, none of which it uses.
+mcp[cli]>=2.0.0
+httpx>=0.28.0

@@ -1,0 +1,24 @@
+# Backend-only dependency set: the orchestrator + the 8 x402-gated microservices.
+#
+# x402 is pinned to 1.0.0 deliberately: it's the simple "address + price string + network
+# string" API (payTo/require_payment/x402HttpxClient) using the public x402.org facilitator,
+# not the newer 2.x "resource server + CAIP-2 network id + scheme registration" API. Both are
+# the official Coinbase/x402-foundation SDK; 1.0.0 is what this project's FastAPI middleware
+# and httpx client code is written against.
+x402==1.0.0
+
+fastapi>=0.115.0
+uvicorn[standard]>=0.32.0
+httpx>=0.27.0
+pydantic>=2.10.0
+python-dotenv>=1.0.1
+eth-account>=0.13.7
+web3>=6.0.0
+
+# Deliberately NOT here, unlike the upstream monorepo's requirements.txt:
+#   streamlit/requests - only the local Streamlit dev UI (frontend/app.py) needed those,
+#     and that file is not part of this repo. They pull in pandas, pyarrow, numpy and
+#     altair: ~250MB of image for code that isn't here.
+#   mcp[cli]           - only `python -m mcp_server` needs it. mcp_server/ ships its own
+#     requirements.txt and Dockerfile and deploys as a separate app, so the backend image
+#     never carries it.

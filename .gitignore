@@ -1,0 +1,21 @@
+# Secrets - NEVER commit. Holds the buyer wallet private key and the LLM/search API keys.
+# Real values belong in Coolify's environment variables, not in the repo.
+.env
+
+# Python
+.venv/
+venv/
+__pycache__/
+*.py[cod]
+*.egg-info/
+
+# The payment ledger + API key store. Runtime state, and on a deployment it lives on a
+# persistent volume mounted at /app/data - never in git.
+data/*.db
+data/*.json
+
+# OS / editor
+.DS_Store
+.idea/
+.vscode/
+*.swp

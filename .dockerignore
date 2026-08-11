@@ -1,0 +1,15 @@
+# Secrets and local state - config comes from real environment variables at runtime.
+.env
+data/*.db
+data/*.json
+
+.venv/
+**/__pycache__/
+**/*.pyc
+.git/
+.gitignore
+
+# scripts/ and wallet/ are deliberately NOT ignored, unlike the upstream monorepo's
+# .dockerignore. Both have to run *inside* the container to be useful:
+# scripts/manage_keys.py writes API keys into data/ledger.db (the mounted volume), and
+# wallet/check_balance.py reads the buyer key from the container's own environment.

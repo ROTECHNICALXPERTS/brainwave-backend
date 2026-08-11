@@ -1,0 +1,14 @@
+services:
+  mcp:
+    build: .
+    container_name: autoresearch-mcp
+    restart: unless-stopped
+    environment:
+      # Point at your deployed orchestrator - if it's also a container on this same
+      # compose network, use its service name (e.g. http://orchestrator:4000) instead of
+      # a public URL, so this call never leaves the host.
+      AUTORESEARCH_API_URL: ${AUTORESEARCH_API_URL:-http://localhost:4000}
+    ports:
+      - "8080:8080"
+    # No API key env var here on purpose - see the Dockerfile comment. Each connecting
+    # client sends its own key on the request.
