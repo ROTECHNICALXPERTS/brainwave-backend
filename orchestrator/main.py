@@ -24,11 +24,21 @@ from .orchestrate import run_job
 
 app = FastAPI(title="AutoResearch Orchestrator")
 
-# Basic CORS so a local frontend dev server can call this without a proxy.
+# Fully open CORS: any origin, any method, any header. Deliberate - this API is meant to be
+# callable from any frontend, any local dev server and any third-party page, without an
+# origin allowlist to keep in sync as deployments move around.
+#
+# This governs which *websites* a browser will let call this API. It is not the access
+# control: that's REQUIRE_API_KEY plus the per-caller spend caps in shared/api_keys.py.
+# Opening CORS does not open the wallet, and locking CORS would not protect it - a script
+# outside a browser ignores CORS entirely.
+#
+# allow_credentials stays off. The CORS spec forbids pairing it with a "*" origin, and this
+# API authenticates with an API key header rather than cookies, so it is not needed.
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],
-    allow_methods=["GET", "POST", "OPTIONS"],
+    allow_methods=["*"],
     allow_headers=["*"],
 )
 
